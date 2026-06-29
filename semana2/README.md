@@ -80,3 +80,7 @@ El dashboard muestra información estadística de los usuarios registrados en la
 
 ```text
 http://localhost:9090/dashboard
+
+### Evidencia
+
+![Evidencia dashboard](Semana2_evidencia_dashboard.png)
