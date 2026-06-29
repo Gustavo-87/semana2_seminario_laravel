@@ -13,6 +13,10 @@ class DashboardController extends Controller
 
         $usuariosHoy = User::whereDate('created_at', Carbon::today())->count();
 
+        $usuariosMesPasado = User::whereMonth('created_at', Carbon::now()->subMonth()->month)
+            ->whereYear('created_at', Carbon::now()->subMonth()->year)
+            ->count();
+
         $ultimosUsuarios = User::latest()->take(5)->get();
 
         $usuariosPorDia = User::selectRaw('DATE(created_at) as fecha, COUNT(*) as total')
@@ -26,6 +30,7 @@ class DashboardController extends Controller
         return view('dashboard', compact(
             'totalUsuarios',
             'usuariosHoy',
+            'usuariosMesPasado',
             'ultimosUsuarios',
             'fechas',
             'totales'

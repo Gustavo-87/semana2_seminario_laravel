@@ -57,12 +57,26 @@ La carpeta `vendor/` puede reconstruirse ejecutando:
 composer install
 ```
 
-## 5. Entregable
+## Ejercicio Dashboard con estadísticas y gráficos
 
-El entregable contiene:
+En este ejercicio se desarrolló un dashboard básico en Laravel utilizando datos enviados desde un controlador hacia una vista Blade.
 
-- Proyecto Laravel dentro de la carpeta `semana2/`.
-- Captura de `php -v` y `composer --version`.
-- Captura de `ls -la` mostrando la estructura del proyecto.
-- Captura de la pantalla de bienvenida de Laravel.
-- Archivo `README.md` documentando la instalación de Laravel.
+El dashboard muestra información estadística de los usuarios registrados en la base de datos, incluyendo:
+
+- Total de usuarios registrados.
+- Usuarios nuevos del día actual.
+- Usuarios registrados durante el mes pasado.
+- Gráfico de usuarios registrados por día usando Chart.js.
+- Tabla con los últimos usuarios registrados y su correo electrónico.
+
+### Archivos utilizados
+
+- `app/Http/Controllers/DashboardController.php`
+- `resources/views/dashboard.blade.php`
+- `resources/views/layouts/app.blade.php`
+- `routes/web.php`
+
+### Ruta del dashboard
+
+```text
+http://localhost:9090/dashboard
