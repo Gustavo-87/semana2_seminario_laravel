@@ -78,9 +78,8 @@ El dashboard muestra información estadística de los usuarios registrados en la
 
 ### Ruta del dashboard
 
-```text
 http://localhost:9090/dashboard
 
 ### Evidencia
 
-![Evidencia dashboard](Semana2_evidencia_dashboard.png)
+![Evidencia dashboard](./Semana2_evidencia_dashboard.png)
