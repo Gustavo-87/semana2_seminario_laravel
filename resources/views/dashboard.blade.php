@@ -7,7 +7,7 @@
     <p>Esta vista usa datos enviados desde el controlador.</p>
 
     <div class="row mb-4">
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <div class="card card-stats shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title text-primary">Total de usuarios</h5>
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <div class="card card-stats shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title text-success">Usuarios nuevos hoy</h5>
@@ -25,7 +25,16 @@
             </div>
         </div>
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
+            <div class="card card-stats shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-info">Usuarios de este mes</h5>
+                    <h2>{{ $usuariosEsteMes }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
             <div class="card card-stats shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title text-warning">Usuarios del mes pasado</h5>
