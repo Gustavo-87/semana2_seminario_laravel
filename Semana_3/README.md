@@ -54,7 +54,7 @@ El proyecto se organiza siguiendo la estructura básica de Laravel. Los archivos
 
 ## Evidencia de ejecucion y configuración Task Manager-Tareas
 
-![Evidencia Semana 3 - Task Manager](evidencia_semana3_taskmanager.png)
+<img src="./evidencia_semana3_taskmanager.png" alt="Evidencia Semana 3 - Task Manager" width="900">
 
 
 
