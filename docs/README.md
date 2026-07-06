@@ -54,3 +54,43 @@ Instalar dependencias:
 ```bash
 composer install
 npm install
+```
+
+Copiar archivo de entorno:
+
+```bash
+cp .env.example .env
+```
+
+Generar clave de aplicación:
+
+```bash
+sail php artisan key:generate
+```
+
+Ejecutar migraciones y seeders:
+
+```bash
+sail php artisan migrate:fresh --seed
+```
+
+Levantar el proyecto:
+
+```bash
+sail up -d
+```
+
+Ingresar en el navegador:
+
+```text
+http://localhost/tareas
+```
+
+## Archivos de documentación
+
+| Archivo | Descripción |
+|---|---|
+| `docs/diccionario.md` | Diccionario de datos del proyecto. |
+| `docs/mer_task_manager.md` | Modelo entidad-relación del proyecto. |
+| `docs/README.md` | Documentación general del Módulo III. |
+
