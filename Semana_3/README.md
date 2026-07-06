@@ -32,63 +32,22 @@ Implementar una aplicación web que permita registrar, listar y consultar tareas
 - Validación del guardado de tareas en base de datos.
 - Subida del proyecto a GitHub en la rama `task-manager`.
 
-## Estructura principal
+```md
+## Estructura principal del proyecto
 
-```text
-app/Models/Task.php
-app/Models/Category.php
-app/Http/Controllers/TaskController.php
-database/migrations/
-database/factories/
-database/seeders/
-resources/views/tareas/
-routes/web.php
-Comandos utilizados
+El proyecto se organiza siguiendo la estructura básica de Laravel. Los archivos más importantes desarrollados durante esta etapa fueron:
 
-Ejecutar migraciones:
+| Archivo o carpeta | Descripción |
+|---|---|
+| `app/Models/Task.php` | Modelo encargado de representar las tareas del sistema. |
+| `app/Models/Category.php` | Modelo encargado de representar las categorías asociadas a las tareas. |
+| `app/Http/Controllers/TaskController.php` | Controlador principal para gestionar el listado y creación de tareas. |
+| `database/migrations/` | Carpeta donde se encuentran las migraciones para crear y modificar las tablas de la base de datos. |
+| `database/factories/` | Carpeta donde se definen datos de prueba para usuarios, tareas y categorías. |
+| `database/seeders/` | Carpeta donde se cargan datos iniciales en la base de datos. |
+| `resources/views/tareas/` | Carpeta que contiene las vistas Blade relacionadas con el módulo de tareas. |
+| `resources/views/layouts/app.blade.php` | Plantilla principal utilizada por las vistas del proyecto. |
+| `routes/web.php` | Archivo donde se definen las rutas web de la aplicación. |
 
-sail php artisan migrate
-
-Reiniciar la base de datos y ejecutar seeders:
-
-sail php artisan migrate:fresh --seed
-
-Abrir Tinker:
-
-sail php artisan tinker
-
-Consultar tareas desde Tinker:
-
-\App\Models\Task::latest('id')->take(5)->get();
-Problema identificado
-
-Durante las pruebas, algunas tareas aparecían en la vista con el texto:
-
-Sin categoría
-
-Se verificó desde Tinker que las tareas sí estaban guardando el campo category_id, por lo cual el problema no estaba en el guardado, sino en la forma de mostrar la relación en la vista.
-
-También se identificó que la columna del título en la tabla tasks se llama titulo, no title.
-
-Gestión con GitHub
-
-El proyecto fue subido al repositorio:
-
-https://github.com/Gustavo-87/semana2_seminario_laravel
-
-En la rama:
-
-task-manager
-
-Para revisar este proyecto, se debe cambiar la rama de main a task-manager.
-
-Estado actual
-
-El sistema permite visualizar un listado de tareas con:
-
-ID
-Título
-Estado
-Categoría
-Usuario
-Fecha límite
+## Evidencia de ejecucion y configuración Task Manager-Tareas
+![Evidencia Semana 3 - Task Manager](evidencia_semana3_taskmanager.png)
