@@ -50,5 +50,6 @@ El proyecto se organiza siguiendo la estructura básica de Laravel. Los archivos
 | `routes/web.php` | Archivo donde se definen las rutas web de la aplicación. |
 
 ## Evidencia de ejecucion y configuración Task Manager-Tareas
- ![Evidencia Semana 3 - Task Manager](./evidencia_semana3_taskmanager.png)
- 
+![Evidencia Semana 3 - Task Manager](evidencia_semana3_taskmanager.png)
+
+
