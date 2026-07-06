@@ -32,7 +32,6 @@ Implementar una aplicación web que permita registrar, listar y consultar tareas
 - Validación del guardado de tareas en base de datos.
 - Subida del proyecto a GitHub en la rama `task-manager`.
 
-```md
 ## Estructura principal del proyecto
 
 El proyecto se organiza siguiendo la estructura básica de Laravel. Los archivos más importantes desarrollados durante esta etapa fueron:
@@ -48,13 +47,7 @@ El proyecto se organiza siguiendo la estructura básica de Laravel. Los archivos
 | `resources/views/tareas/` | Carpeta que contiene las vistas Blade relacionadas con el módulo de tareas. |
 | `resources/views/layouts/app.blade.php` | Plantilla principal utilizada por las vistas del proyecto. |
 | `routes/web.php` | Archivo donde se definen las rutas web de la aplicación. |
-|`resources/views/tareas/` | Carpeta que contiene las vistas Blade relacionadas con el módulo de tareas. |
-|`resources/views/layouts/app.blade.php` | Plantilla principal utilizada por las vistas del proyecto. |
-|`routes/web.php` | Archivo donde se definen las rutas web de la aplicación. |
 
 ## Evidencia de ejecucion y configuración Task Manager-Tareas
 
 <img src="./evidencia_semana3_taskmanager.png" alt="Evidencia Semana 3 - Task Manager" width="900">
-
-
-
