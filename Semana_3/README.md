@@ -48,15 +48,13 @@ El proyecto se organiza siguiendo la estructura básica de Laravel. Los archivos
 | `resources/views/tareas/` | Carpeta que contiene las vistas Blade relacionadas con el módulo de tareas. |
 | `resources/views/layouts/app.blade.php` | Plantilla principal utilizada por las vistas del proyecto. |
 | `routes/web.php` | Archivo donde se definen las rutas web de la aplicación. |
+|`resources/views/tareas/` | Carpeta que contiene las vistas Blade relacionadas con el módulo de tareas. |
+|`resources/views/layouts/app.blade.php` | Plantilla principal utilizada por las vistas del proyecto. |
+|`routes/web.php` | Archivo donde se definen las rutas web de la aplicación. |
 
-gustavo@GustavoPiedrahita:~/proyectos/task-manager$ grep -n -C 5 evidencia Semana_3/README.md
-48-| `resources/views/tareas/` | Carpeta que contiene las vistas Blade relacionadas con el módulo de tareas. |
-49-| `resources/views/layouts/app.blade.php` | Plantilla principal utilizada por las vistas del proyecto. |
-50-| `routes/web.php` | Archivo donde se definen las rutas web de la aplicación. |
-
-51-## Evidencia de ejecucion y configuración Task Manager-Tareas
+## Evidencia de ejecucion y configuración Task Manager-Tareas
 
 ![Evidencia Semana 3 - Task Manager](evidencia_semana3_taskmanager.png)
-52
+
 
 
