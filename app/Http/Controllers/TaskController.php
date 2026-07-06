@@ -74,24 +74,39 @@ public function store(Request $request)
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Task $task)
+    public function edit(Task $tarea)
     {
-        //
+        $categorias = Category::orderBy('name')->get();
+
+    return view('tareas.edit', compact('tarea', 'categorias'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
-    {
-        //
-    }
+    public function update(Request $request, Task $tarea)
+{
+    $request->validate([
+        'titulo' => 'required|string|max:150',
+        'descripcion' => 'nullable|string',
+        'fecha_limite' => 'nullable|date',
+        'estado' => 'required|in:pendiente,en_progreso,completada',
+        'category_id' => 'required|exists:categories,id',
+    ]);
+
+    $tarea->update($request->all());
+
+    return redirect()->route('tareas.index')->with('success', 'Tarea actualizada correctamente.');
+}
+    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy(Task $tarea)
     {
-        //
+        $tarea->delete();
+
+    return redirect()->route('tareas.index')->with('success', 'Tarea eliminada correctamente.');
     }
-}
+    }

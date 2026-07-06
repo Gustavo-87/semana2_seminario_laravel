@@ -90,6 +90,7 @@
                         <th>Categoría</th>
                         <th>Usuario</th>
                         <th>Fecha límite</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
 
@@ -109,9 +110,24 @@
                                     {{ $tarea->estado }}
                                 </span>
                             </td>
-                            <td>{{ $tarea->category?->nombre ?? 'Sin categoría' }}</td>
+                            <td>{{ $tarea->category?->name ?? 'Sin categoría' }}</td>
                             <td>{{ $tarea->user?->name ?? 'Sin usuario' }}</td>
-                            <td>{{ $tarea->fecha_limite ?? 'No definida' }}</td>
+                            <td>{{ $tarea->fecha_limite ? \Carbon\Carbon::parse($tarea->fecha_limite)->format('d/m/Y') : 'No definida' }}
+                            </td>
+                            <td>
+    <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-warning btn-sm">
+        Editar
+    </a>
+
+    <form action="{{ route('tareas.destroy', $tarea) }}" method="POST" class="d-inline">
+        @csrf
+        @method('DELETE')
+
+        <button type="submit" class="btn btn-danger btn-sm">
+            Eliminar
+        </button>
+    </form>
+</td>
                         </tr>
                     @empty
                         <tr>
