@@ -94,3 +94,13 @@ http://localhost/tareas
 | `docs/mer_task_manager.md` | Modelo entidad-relación del proyecto. |
 | `docs/README.md` | Documentación general del Módulo III. |
 
+## Evidencias del funcionamiento
+
+A continuación se presentan las evidencias del CRUD implementado para el proyecto Task Manager.
+
+| Evidencia | Descripción |
+|---|---|
+| ![Listado de tareas](evidencias/evidencias_listado_tareas.png) | Listado principal de tareas con datos cargados desde la base de datos. |
+| ![Crear tarea](evidencias/evidencias_crear_tarea.png) | Formulario de creación de una nueva tarea. |
+| ![Editar tarea](evidencias/evidencias_editar_tarea.png) | Formulario de edición de una tarea existente. |
+| ![Eliminar tarea](evidencias/evidencias_eliminar_tarea.png) | Evidencia del proceso de eliminación de una tarea. |
