@@ -104,3 +104,4 @@ A continuación se presentan las evidencias del CRUD implementado para el proyec
 | ![Crear tarea](evidencias/evidencias_crear_tarea.png) | Formulario de creación de una nueva tarea. |
 | ![Editar tarea](evidencias/evidencias_editar_tarea.png) | Formulario de edición de una tarea existente. |
 | ![Eliminar tarea](evidencias/evidencias_eliminar_tarea.png) | Evidencia del proceso de eliminación de una tarea. |
+| ![MER Task Manager](evidencias/evidencias_mer_task_manager.png) | Modelo entidad-relación actualizado del proyecto Task Manager. |
