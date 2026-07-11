@@ -138,6 +138,10 @@
                     @endforelse
                 </tbody>
             </table>
+
+            <div class="mt-4 d-flex justify-content-center">
+                {{ $tareas->links() }}
+            </div>
         </div>
     </div>
 
