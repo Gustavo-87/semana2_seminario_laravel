@@ -47,20 +47,21 @@ class TaskController extends Controller
      */
 public function store(Request $request)
 {
-    $request->validate([
-        'titulo' => 'required|string|max:150',
+    $validated = $request->validate([
+        'titulo' => 'required|string|max:150|unique:tasks,titulo',
         'descripcion' => 'nullable|string',
         'fecha_limite' => 'nullable|date',
         'estado' => 'required|in:pendiente,en_progreso,completada',
         'category_id' => 'required|exists:categories,id',
     ]);
 
-    $data = $request->all();
-    $data['user_id'] = 1;
+    Task::create($validated + [
+        'user_id' => auth()->id(),
+    ]);
 
-    Task::create($data);
-
-    return redirect()->route('tareas.index')->with('success', 'Tarea creada exitosamente.');
+    return redirect()
+        ->route('tareas.index')
+        ->with('success', 'Tarea creada correctamente.');
 }
 
     /**

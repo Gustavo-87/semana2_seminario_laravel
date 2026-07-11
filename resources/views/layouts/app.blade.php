@@ -1,70 +1,65 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager - @yield('titulo', 'Panel de Control')</title>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <title>@yield('titulo', config('app.name', 'Laravel'))</title>
 
-    <style>
-        body { background-color: #f8f9fc; }
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        .sidebar {
-            min-height: 100vh;
-            background: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
-        }
+        <!-- Bootstrap para las vistas de tareas -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        .sidebar .nav-link {
-            color: rgba(255,255,255,0.8);
-        }
+        <!-- Font Awesome para los íconos usados en tareas -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-        .sidebar .nav-link:hover,
-        .sidebar .nav-link.active {
-            color: white;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-md-block sidebar p-0">
-                <div class="position-sticky pt-3">
-                    <h5 class="text-center text-white py-3 border-bottom border-light">
-                        Task Manager
-                    </h5>
+        <!-- Scripts de Breeze / Vite -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
 
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('tareas.index') }}">
-                                <i class="fas fa-tasks me-2"></i> Mis Tareas
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-100">
+            @include('layouts.navigation')
 
-            <main class="col-md-10 ms-sm-auto px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">@yield('titulo_pagina', 'Panel')</h1>
-                    <span class="badge bg-primary">Bienvenido</span>
-                </div>
-
-                @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <!-- Encabezado para Breeze -->
+            @isset($header)
+                <header class="bg-white shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
                     </div>
+                </header>
+            @else
+                @hasSection('titulo_pagina')
+                    <header class="bg-white shadow-sm">
+                        <div class="container py-4">
+                            <h1 class="h3 mb-0">@yield('titulo_pagina')</h1>
+                        </div>
+                    </header>
                 @endif
+            @endisset
 
-                @yield('contenido')
+            <!-- Contenido principal -->
+            <main>
+                @isset($slot)
+                    {{ $slot }}
+                @else
+                    <div class="container py-4">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @yield('contenido')
+                    </div>
+                @endisset
             </main>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    @stack('scripts')
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
 </html>
