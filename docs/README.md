@@ -533,3 +533,62 @@ evidencias/modulo4/breeze_perfil_username.png
 ![Registro con username](evidencias/modulo4/breeze_registro_username.png)
 
 ![Perfil con username](evidencias/modulo4/breeze_perfil_username.png)
+
+## Autorización con Policy para tareas
+
+Se implementó una Policy para el modelo `Task` con el fin de controlar qué acciones puede realizar cada usuario sobre las tareas del sistema.
+
+La Policy se creó en el archivo:
+
+```text
+app/Policies/TaskPolicy.php
+```
+
+La lógica definida fue la siguiente:
+
+| Acción                | Regla aplicada                                      |
+| --------------------- | --------------------------------------------------- |
+| Ver listado de tareas | Cualquier usuario autenticado puede ver el listado. |
+| Crear tareas          | Solo usuarios con rol `admin`.                      |
+| Ver una tarea         | El administrador o el dueño de la tarea.            |
+| Editar una tarea      | El administrador o el dueño de la tarea.            |
+| Eliminar una tarea    | El administrador o el dueño de la tarea.            |
+
+También se actualizó el controlador `TaskController` para validar los permisos antes de ejecutar acciones sensibles mediante `Gate::authorize()`.
+
+Ejemplos aplicados:
+
+```php
+Gate::authorize('create', Task::class);
+Gate::authorize('update', $tarea);
+Gate::authorize('delete', $tarea);
+```
+
+En la vista principal de tareas se usó la directiva `@can` para mostrar u ocultar los botones según los permisos del usuario autenticado:
+
+```php
+@can('update', $tarea)
+    <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-warning btn-sm">
+        Editar
+    </a>
+@endcan
+
+@can('delete', $tarea)
+    <form action="{{ route('tareas.destroy', $tarea) }}" method="POST" class="d-inline">
+        @csrf
+        @method('DELETE')
+
+        <button type="submit" class="btn btn-danger btn-sm">
+            Eliminar
+        </button>
+    </form>
+@endcan
+```
+
+Evidencia:
+
+```text
+evidencias/modulo4/policy_botones_ocultos_usuario.png
+```
+
+![Policy botones ocultos usuario](evidencias/modulo4/policy_botones_ocultos_usuario.png)

@@ -75,9 +75,11 @@
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Listado de tareas</h5>
 
-            <a href="{{ route('tareas.create') }}" class="btn btn-primary btn-sm">
-                <i class="fas fa-plus"></i> Nueva tarea
-            </a>
+            @can('create', App\Models\Task::class)
+                <a href="{{ route('tareas.create') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> Nueva tarea
+                </a>
+            @endcan
         </div>
 
         <div class="card-body">
@@ -115,23 +117,27 @@
                             <td>{{ $tarea->fecha_limite ? \Carbon\Carbon::parse($tarea->fecha_limite)->format('d/m/Y') : 'No definida' }}
                             </td>
                             <td>
-    <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-warning btn-sm">
-        Editar
-    </a>
+                                @can('update', $tarea)
+                                    <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-warning btn-sm">
+                                        Editar
+                                    </a>
+                                @endcan
 
-    <form action="{{ route('tareas.destroy', $tarea) }}" method="POST" class="d-inline">
-        @csrf
-        @method('DELETE')
+                                @can('delete', $tarea)
+                                    <form action="{{ route('tareas.destroy', $tarea) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
 
-        <button type="submit" class="btn btn-danger btn-sm">
-            Eliminar
-        </button>
-    </form>
-</td>
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                @endcan
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center text-muted">
+                            <td colspan="7" class="text-center text-muted">
                                 No hay tareas registradas.
                             </td>
                         </tr>

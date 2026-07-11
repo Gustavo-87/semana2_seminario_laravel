@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Task;
 use Illuminate\Http\Request;
-use App\Models\Category;
-
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
@@ -13,65 +13,74 @@ class TaskController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    $query = Task::with(['user', 'category']);
+    {
+        Gate::authorize('viewAny', Task::class);
 
-    if ($request->filled('buscar')) {
-        $query->buscar($request->buscar);
-    }
+        $query = Task::with(['user', 'category']);
 
-    if ($request->filled('estado')) {
-        if ($request->estado == 'completada') {
-            $query->completadas();
-        } else {
-            $query->pendientes();
+        if ($request->filled('buscar')) {
+            $query->buscar($request->buscar);
         }
+
+        if ($request->filled('estado')) {
+            if ($request->estado == 'completada') {
+                $query->completadas();
+            } else {
+                $query->pendientes();
+            }
+        }
+
+        $tareas = $query->orderBy('created_at', 'desc')
+            ->paginate(15)
+            ->withQueryString();
+
+        return view('tareas.index', compact('tareas'));
     }
 
-    $tareas = $query->orderBy('created_at', 'desc')
-        ->paginate(15)
-        ->withQueryString();
-
-    return view('tareas.index', compact('tareas'));
-}
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        Gate::authorize('create', Task::class);
+
         $categorias = Category::all();
 
-    return view('tareas.create', compact('categorias'));
+        return view('tareas.create', compact('categorias'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-public function store(Request $request)
-{
-    $validated = $request->validate([
-        'titulo' => 'required|string|max:150|unique:tasks,titulo',
-        'descripcion' => 'nullable|string',
-        'fecha_limite' => 'nullable|date',
-        'estado' => 'required|in:pendiente,en_progreso,completada',
-        'category_id' => 'required|exists:categories,id',
-    ]);
+    public function store(Request $request)
+    {
+        Gate::authorize('create', Task::class);
 
-    Task::create($validated + [
-        'user_id' => auth()->id(),
-    ]);
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:150|unique:tasks,titulo',
+            'descripcion' => 'nullable|string',
+            'fecha_limite' => 'nullable|date',
+            'estado' => 'required|in:pendiente,en_progreso,completada',
+            'category_id' => 'required|exists:categories,id',
+        ]);
 
-    return redirect()
-        ->route('tareas.index')
-        ->with('success', 'Tarea creada correctamente.');
-}
+        Task::create($validated + [
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect()
+            ->route('tareas.index')
+            ->with('success', 'Tarea creada correctamente.');
+    }
 
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show(Task $tarea)
     {
-        //
+        Gate::authorize('view', $tarea);
+
+        return redirect()->route('tareas.index');
     }
 
     /**
@@ -79,37 +88,46 @@ public function store(Request $request)
      */
     public function edit(Task $tarea)
     {
+        Gate::authorize('update', $tarea);
+
         $categorias = Category::orderBy('name')->get();
 
-    return view('tareas.edit', compact('tarea', 'categorias'));
+        return view('tareas.edit', compact('tarea', 'categorias'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Task $tarea)
-{
-    $request->validate([
-        'titulo' => 'required|string|max:150',
-        'descripcion' => 'nullable|string',
-        'fecha_limite' => 'nullable|date',
-        'estado' => 'required|in:pendiente,en_progreso,completada',
-        'category_id' => 'required|exists:categories,id',
-    ]);
+    {
+        Gate::authorize('update', $tarea);
 
-    $tarea->update($request->all());
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:150',
+            'descripcion' => 'nullable|string',
+            'fecha_limite' => 'nullable|date',
+            'estado' => 'required|in:pendiente,en_progreso,completada',
+            'category_id' => 'required|exists:categories,id',
+        ]);
 
-    return redirect()->route('tareas.index')->with('success', 'Tarea actualizada correctamente.');
-}
-    
+        $tarea->update($validated);
+
+        return redirect()
+            ->route('tareas.index')
+            ->with('success', 'Tarea actualizada correctamente.');
+    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Task $tarea)
     {
+        Gate::authorize('delete', $tarea);
+
         $tarea->delete();
 
-    return redirect()->route('tareas.index')->with('success', 'Tarea eliminada correctamente.');
+        return redirect()
+            ->route('tareas.index')
+            ->with('success', 'Tarea eliminada correctamente.');
     }
-    }
+}
