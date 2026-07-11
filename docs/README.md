@@ -506,7 +506,7 @@ git status --short
 
 Con este módulo, el proyecto Task Manager dejó de ser únicamente un CRUD básico y pasó a integrar elementos importantes de una aplicación web más completa: autenticación, autorización por roles, validación de datos, dashboard, paginación, consumo de servicios externos y API protegida mediante tokens JWT.
 
-### Personalización del registro y perfil con username
+## Personalización del registro y perfil con username
 
 Como parte del sistema de autenticación con Laravel Breeze, se agregó el campo `username` a la tabla `users` mediante una migración. Este campo permite registrar un nombre de usuario adicional al nombre completo y al correo electrónico.
 
