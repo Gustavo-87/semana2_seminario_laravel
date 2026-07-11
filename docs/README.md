@@ -505,3 +505,31 @@ git status --short
 ## Conclusión del módulo
 
 Con este módulo, el proyecto Task Manager dejó de ser únicamente un CRUD básico y pasó a integrar elementos importantes de una aplicación web más completa: autenticación, autorización por roles, validación de datos, dashboard, paginación, consumo de servicios externos y API protegida mediante tokens JWT.
+
+### Personalización del registro y perfil con username
+
+Como parte del sistema de autenticación con Laravel Breeze, se agregó el campo `username` a la tabla `users` mediante una migración. Este campo permite registrar un nombre de usuario adicional al nombre completo y al correo electrónico.
+
+El campo fue incorporado tanto en el formulario de registro como en el formulario de perfil del usuario. También se actualizó la validación correspondiente para que el nombre de usuario sea obligatorio y no se repita entre usuarios.
+
+Archivos modificados:
+
+| Archivo                                                                      | Descripción                                                                           |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `database/migrations/2026_07_11_145021_add_username_to_users_table.php`      | Migración para agregar la columna `username` a la tabla `users`.                      |
+| `app/Models/User.php`                                                        | Se agregó `username` al arreglo `$fillable`.                                          |
+| `app/Http/Controllers/Auth/RegisteredUserController.php`                     | Se agregó la validación y el almacenamiento del campo `username` durante el registro. |
+| `resources/views/auth/register.blade.php`                                    | Se agregó el campo visual `Nombre de usuario` al formulario de registro.              |
+| `resources/views/profile/partials/update-profile-information-form.blade.php` | Se agregó el campo `Nombre de usuario` al formulario de perfil.                       |
+| `app/Http/Requests/ProfileUpdateRequest.php`                                 | Se agregó la validación de `username` al actualizar el perfil.                        |
+
+Evidencias:
+
+```text
+evidencias/modulo4/breeze_registro_username.png
+evidencias/modulo4/breeze_perfil_username.png
+```
+
+![Registro con username](evidencias/modulo4/breeze_registro_username.png)
+
+![Perfil con username](evidencias/modulo4/breeze_perfil_username.png)
