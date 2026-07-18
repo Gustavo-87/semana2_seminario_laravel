@@ -16,25 +16,22 @@ class TaskController extends Controller
     {
         Gate::authorize('viewAny', Task::class);
 
-        $query = Task::with(['user', 'category']);
+        $query = Task::with(['user', 'category'])
+            ->buscar($request->get('buscar'))
+            ->filtrarEstado($request->get('estado'))
+            ->filtrarCategoria($request->get('categoria'))
+            ->fechas(
+                $request->get('fecha_inicio'),
+                $request->get('fecha_fin')
+            );
 
-        if ($request->filled('buscar')) {
-            $query->buscar($request->buscar);
-        }
-
-        if ($request->filled('estado')) {
-            if ($request->estado == 'completada') {
-                $query->completadas();
-            } else {
-                $query->pendientes();
-            }
-        }
-
-        $tareas = $query->orderBy('created_at', 'desc')
+        $tareas = $query->latest()
             ->paginate(15)
             ->withQueryString();
 
-        return view('tareas.index', compact('tareas'));
+        $categorias = Category::orderBy('name')->get();
+
+        return view('tareas.index', compact('tareas', 'categorias'));
     }
 
     /**
