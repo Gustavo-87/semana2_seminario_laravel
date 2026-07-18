@@ -18,6 +18,9 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'rol',
+        'telefono',
+        'direccion',
+        'avatar',
     ];
 
     protected $hidden = [
@@ -31,6 +34,13 @@ class User extends Authenticatable implements JWTSubject
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        return $this->avatar
+            ? asset('storage/' . $this->avatar)
+            : null;
     }
 
     public function getJWTIdentifier()

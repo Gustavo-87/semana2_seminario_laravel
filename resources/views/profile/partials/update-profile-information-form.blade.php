@@ -13,9 +13,24 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
         @csrf
         @method('patch')
+
+        @if (session('status') === 'profile-updated')
+            <div
+                id="profile-success-message"
+                class="rounded-md bg-green-100 px-4 py-3 text-sm font-medium text-green-800"
+            >
+                Perfil actualizado correctamente.
+            </div>
+
+            <script>
+                setTimeout(function () {
+                    document.getElementById('profile-success-message')?.remove();
+                }, 5000);
+            </script>
+        @endif
 
         <div>
             <x-input-label for="name" :value="__('Name')" />
@@ -53,18 +68,55 @@
             @endif
         </div>
 
+        <div>
+            <x-input-label for="telefono" :value="__('Teléfono')" />
+            <x-text-input
+                id="telefono"
+                name="telefono"
+                type="text"
+                class="mt-1 block w-full"
+                :value="old('telefono', $user->telefono)"
+                autocomplete="tel"
+            />
+            <x-input-error class="mt-2" :messages="$errors->get('telefono')" />
+        </div>
+
+        <div>
+            <x-input-label for="direccion" :value="__('Dirección')" />
+            <textarea
+                id="direccion"
+                name="direccion"
+                rows="3"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            >{{ old('direccion', $user->direccion) }}</textarea>
+            <x-input-error class="mt-2" :messages="$errors->get('direccion')" />
+        </div>
+
+        <div>
+            <x-input-label for="avatar" :value="__('Avatar')" />
+            <input
+                id="avatar"
+                name="avatar"
+                type="file"
+                accept="image/jpeg,image/png,image/jpg,image/gif"
+                class="mt-1 block w-full text-sm text-gray-700"
+            />
+
+            @if ($user->avatar)
+                <div class="mt-3">
+                    <img
+                        src="{{ $user->avatar_url }}"
+                        alt="Avatar de {{ $user->name }}"
+                        class="h-24 w-24 rounded-full object-cover"
+                    >
+                </div>
+            @endif
+
+            <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
-
-            @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
-            @endif
         </div>
     </form>
 </section>
