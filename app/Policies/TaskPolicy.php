@@ -24,11 +24,11 @@ class TaskPolicy
     }
 
     /**
-     * Permite crear tareas solo a usuarios administradores.
+     * Permite crear tareas a cualquier usuario autenticado.
      */
     public function create(User $user): bool
     {
-        return $user->rol === 'admin';
+        return true;
     }
 
     /**
