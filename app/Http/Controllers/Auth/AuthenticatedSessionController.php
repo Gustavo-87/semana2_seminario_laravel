@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -28,7 +29,29 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user();
+        $remember = $request->boolean('remember');
+
+        $otp = $user->generateOtp();
+
+        Mail::send(
+            'emails.otp',
+            [
+                'otp' => $otp,
+                'user' => $user,
+            ],
+            function ($message) use ($user) {
+                $message->to($user->email)
+                    ->subject('Código de verificación');
+            }
+        );
+
+        Auth::guard('web')->logout();
+
+        $request->session()->put('otp_user_id', $user->id);
+        $request->session()->put('otp_remember', $remember);
+
+        return redirect()->route('otp.verify');
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OtpVerificationController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
@@ -9,6 +10,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/otp-verify', [OtpVerificationController::class, 'show'])
+    ->name('otp.verify');
+
+Route::post('/otp-verify', [OtpVerificationController::class, 'verify'])
+    ->name('otp.verify.post');
+
+Route::post('/otp-resend', [OtpVerificationController::class, 'resend'])
+    ->name('otp.resend');
 
 Route::get('/dashboard', function () {
     $totalTareas = Task::count();
@@ -25,18 +35,28 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
 
-    Route::get('/posts', [PostsController::class, 'index'])->name('posts.index');
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+
+    Route::get('/posts', [PostsController::class, 'index'])
+        ->name('posts.index');
 
     Route::middleware('rol:admin')->group(function () {
-        Route::get('/tareas/create', [TaskController::class, 'create'])->name('tareas.create');
-        Route::post('/tareas', [TaskController::class, 'store'])->name('tareas.store');
+        Route::get('/tareas/create', [TaskController::class, 'create'])
+            ->name('tareas.create');
+
+        Route::post('/tareas', [TaskController::class, 'store'])
+            ->name('tareas.store');
     });
 
-    Route::resource('tareas', TaskController::class)->except(['create', 'store']);
+    Route::resource('tareas', TaskController::class)
+        ->except(['create', 'store']);
 });
 
 require __DIR__.'/auth.php';
